@@ -8,7 +8,7 @@ Ember.SegmentioMixin = Ember.Mixin.create({
   },
 
   logTracking: function() {
-    Ember.Logger.info('Tracking Segmentio.io event: ', arguments);
+    Ember.Logger.info('[Segment.io] ', arguments);
   },
 
   trackPageView: function(page) {
@@ -22,7 +22,7 @@ Ember.SegmentioMixin = Ember.Mixin.create({
     }
 
     if (this.logTrackingEnabled()) {
-      this.logTracking('pageview', page);
+      this.logTracking('page view', page);
     }
   },
 
@@ -34,9 +34,28 @@ Ember.SegmentioMixin = Ember.Mixin.create({
     if (this.logTrackingEnabled()) {
       this.logTracking(event, properties, options);
     }
+  },
+
+  identifyUser: function(userId, traits, options, callback) {
+    if (this.pageHasAnalytics()) {
+      analytics.identify(userId, traits, options, callback);
+    }
+
+    if (this.logTrackingEnabled()) {
+      this.logTracking('identify user', traits, options);
+    }
+  },
+
+  aliasUser: function(userId, previousId, options, callback) {
+    if (this.pageHasAnalytics()) {
+      analytics.alias(userId, previousId, options, callback)
+    }
+
+    if (this.logTrackingEnabled()) {
+      this.logTracking('alias user', previousId, options);
+    }
   }
 });
-
 Ember.Application.initializer({
   name: "segmentio",
 

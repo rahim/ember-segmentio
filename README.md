@@ -48,6 +48,10 @@ App.VideoController = Ember.Controller.extend(
 
 The mixin can be applied to any Ember object.
 
+### identifyUser, aliasUser
+
+These two Segment.io methods are also available on the mixin, wrapping directly to the Segment.io counterparts with identical method signatures.
+
 ## Logging
 
 To enable console logging any events or page views sent to Segment.io:
